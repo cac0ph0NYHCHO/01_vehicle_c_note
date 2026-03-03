@@ -26,16 +26,16 @@ int main() {
 int main()
 {
 	int a;
-	printf("ÊäÈëµçÑ¹Öµ£¨ÕûÊý£©£º");
+	printf("输入电压值（整数）：");
 	scanf("%d", &a);
 	if (a<10){
-		printf("µÍµçÑ¹¾¯¸æ\n");
+		printf("低电压警告\n");
 	} 
 	else if(10<=a && a<=11){
-		printf("µçÑ¹ÂÔµÍ\n");
+		printf("电压略低\n");
 	}
 	else if(a>=12){
-		printf("µçÑ¹Õý³£\n");
+		printf("电压正常\n");
 	}
 	
 	return 0;
