@@ -89,3 +89,53 @@ int main() {
 ```
 - `perror("车载场景：配置文件打开失败");` // 打印具体错误原因
 - fopen 打开文件后，必须调用 fclose 关闭文件
+
+### 加入fgets后fscanf
+```c
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char op[10], name[20];
+    int pin;
+
+    FILE* fp1 = fopen("test.txt", "w");
+    if (fp1 == NULL) {
+        perror("文件打开失败");
+        fp1 = NULL;
+        return -1;
+    }
+
+    fprintf(fp1, "# 车载车灯操作日志\n");
+    fprintf(fp1, "# 格式：操作类型 车灯名称 引脚\n");
+    fprintf(fp1, "开启 刹车灯 2\n");
+    fprintf(fp1, "关闭 倒车灯 3\n");
+
+    fclose(fp1);
+    fp1 = NULL;
+
+    FILE* fp = fopen("test.txt", "r");
+    if (fp == NULL) {
+        perror("文件打开失败");
+        fp = NULL;
+        return -1;
+    }
+
+    char temp[50];
+    fgets(temp, sizeof(temp), fp);
+    fgets(temp, sizeof(temp), fp);
+
+    fscanf(fp, "%s %s %d", op, name, &pin);
+    printf("日志1：%s %s PB%d\n", op, name, pin);
+    fscanf(fp, "%s %s %d", op, name, &pin);
+    printf("日志2：%s %s PB%d\n", op, name, pin);
+
+    fclose(fp);
+    fp = NULL;
+
+    return 0;
+}
+```
+- `fgets(temp, sizeof(temp), fp);`核心作用是从文件指针 fp 指向的文件中，读取一行文本内容，并存储到字符数组` temp `(缓冲区)中，同时严格限制读取长度以避免缓冲区溢出,`sizeof(temp) `指定最多读取的字符数
+
