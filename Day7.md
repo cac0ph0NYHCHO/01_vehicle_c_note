@@ -111,3 +111,4 @@ void set_led_status(int pin, enum LedStatus status);
 
 #endif
 ```
+- 关注写法：`brake_led_status == LED_ON ? "亮" : "灭"`
